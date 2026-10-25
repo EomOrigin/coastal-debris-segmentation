@@ -1,0 +1,14 @@
+# 학습·로컬 추론 환경 (대회 때: Python 3.11, CUDA 12.1, RTX A6000 48 GB 1장)
+torch==2.5.1
+torchvision==0.20.1
+timm==1.0.29
+segmentation-models-pytorch==0.5.0
+numpy>=2.0
+pillow>=10.0
+opencv-python-headless
+scipy
+# src/run_local.py (제출 노트북을 서버처럼 로컬에서 실행)
+nbconvert
+ipykernel
+# 제출 패키지 자체의 의존성은 submission/requirements.txt (채점 서버에는 OpenCV·SciPy 가 없다)
+# 배경·외부 데이터 수집 스크립트 의존성은 requirements-data.txt

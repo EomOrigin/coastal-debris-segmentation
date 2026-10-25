@@ -1,0 +1,4 @@
+Built with DINOv3.
+Model: timm/vit_large_patch16_dinov3.sat493m
+Original model: https://github.com/facebookresearch/dinov3
+License source: https://raw.githubusercontent.com/facebookresearch/dinov3/main/LICENSE.md

@@ -1,0 +1,34 @@
+# 데이터·영상·가중치는 저장소에 넣지 않는다 (data/README.md, submission/assets/model/README.md 참고)
+data/*
+!data/README.md
+!data/scripts/
+
+src/runs/
+src/pretrained/
+src/e2e/
+submission/assets/model/*
+!submission/assets/model/README.md
+
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.joblib
+*.npz
+*.npy
+*.zip
+*.tif
+*.tiff
+
+# 2차 분류기 중간 산출물
+scripts/verifier/sheet_*.jpg
+scripts/verifier/verifier.json
+
+# 로컬 실행 산출물
+*.executed.ipynb
+_local_stripped.ipynb
+prediction.csv
+.ipynb_checkpoints/
+__pycache__/
+*.pyc

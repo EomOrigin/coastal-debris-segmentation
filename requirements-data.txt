@@ -1,0 +1,7 @@
+# 수집 전용 (data/scripts/*.py, scripts/verifier/fetch_pdok.py). 학습 환경과 따로 설치해도 된다.
+requests
+numpy
+opencv-python-headless
+rasterio<1.4
+pyshp            # fetch_bg_v2.py points --shp (OSM 해안선 shapefile 읽기)
+pillow

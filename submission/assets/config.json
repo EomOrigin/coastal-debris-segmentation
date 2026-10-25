@@ -1,0 +1,123 @@
+{
+ "mean": [
+  0.48500001430511475,
+  0.4560000002384186,
+  0.4059999883174896
+ ],
+ "std": [
+  0.2290000021457672,
+  0.2240000069141388,
+  0.22499999403953552
+ ],
+ "inflate_to": 56,
+ "fp16": true,
+ "batch": 8,
+ "time_budget_s": 5700,
+ "tta": "d4",
+ "input_chroma_sigma": 0.0,
+ "weights": [],
+ "members": [
+  {
+   "arch": "Unet",
+   "encoder": "resnet34",
+   "upscale": 2,
+   "aux_presence": true,
+   "model_variant": "standard",
+   "name": "member_0",
+   "weights": [
+    "weights_7dad6e9049f935650b53db7369e01b268a2b23eaa3f57e9aaed095053629fd6f.pt"
+   ],
+   "mask_weight": 0.0,
+   "presence_weight": 1.0
+  },
+  {
+   "arch": "VFM",
+   "encoder": "vit_large_patch16_dinov3.sat493m",
+   "upscale": 2,
+   "aux_presence": true,
+   "model_variant": "standard",
+   "name": "member_vfm0_v22p",
+   "weights": [
+    "weights_0b42cce595d4b9d75a8a5d4371d3956f13989636da7662463fff50e614ab260c.pt"
+   ],
+   "mask_weight": 0.333333,
+   "presence_weight": 0.0,
+   "vfm_tokens": 48,
+   "vfm_rein_pos": 64,
+   "vfm_anyup": true,
+   "source": "runs/v22p/weights_step4000.pt"
+  },
+  {
+   "arch": "VFM",
+   "encoder": "vit_large_patch16_dinov3.sat493m",
+   "upscale": 2,
+   "aux_presence": true,
+   "model_variant": "standard",
+   "name": "member_vfm1_v22p_s2",
+   "weights": [
+    "weights_b7e0e17d3c4593bdf53ebf576b88c2ebc153e7aca60bacb4965ed057a50ba24c.pt"
+   ],
+   "mask_weight": 0.333333,
+   "presence_weight": 0.0,
+   "vfm_tokens": 48,
+   "vfm_rein_pos": 64,
+   "vfm_anyup": true,
+   "source": "runs/v22p_s2/weights_step1500.pt"
+  },
+  {
+   "arch": "VFM",
+   "encoder": "vit_large_patch16_dinov3.sat493m",
+   "upscale": 2,
+   "aux_presence": true,
+   "model_variant": "standard",
+   "name": "member_vfm_v26mk2",
+   "weights": [
+    "weights_5c653fcadb136433886a67265e2bf77267e909c066f0522227eb3a47323fdf08.pt"
+   ],
+   "mask_weight": 0.333333,
+   "presence_weight": 0.0,
+   "vfm_tokens": 48,
+   "vfm_rein_pos": 64,
+   "vfm_anyup": true,
+   "source": "runs/v26mk2/weights_step1500.pt"
+  },
+  {
+   "arch": "VFM",
+   "encoder": "vit_large_patch16_dinov3.sat493m",
+   "upscale": 2,
+   "aux_presence": true,
+   "model_variant": "standard",
+   "name": "rescue_v19_d3",
+   "weights": [
+    "weights_ea26d1a5152d14459c2bc7af587143f66291cafbff0edd693d895de496fe744b.pt"
+   ],
+   "mask_weight": 0.0,
+   "presence_weight": 0.0,
+   "rescue_weight": 1.0,
+   "vfm_tokens": 32,
+   "vfm_rein_pos": 0,
+   "vfm_anyup": false,
+   "source": "runs/v19_d3/weights_step6000.pt"
+  }
+ ],
+ "mask_thr": 0.35,
+ "presence_thr": 0.9,
+ "verifier": {
+  "enabled": true,
+  "backbone": "dinov2_vitb14_reg4_448_fp16.pt",
+  "head": "verifier_head.pt",
+  "tau": 6.136577e-07,
+  "note": "v16 2차 분류기. 1차 양성만 재판정, p<tau 이면 음성. DINOv2(Apache-2.0)"
+ },
+ "v19a": "v16a 판정·2차 그대로 + 마스크 v19 단독 (v19_d3/weights_fp16.pt, vit_large_patch16_dinov3.sat493m)",
+ "v19t90": "v19a(DINOv3 단독 마스크) + 존재 임계 0.4 → 0.9 (v18t90 판정과 동일)",
+ "rescue": {
+  "lo": 0.7,
+  "t": 0.9,
+  "n": 50
+ },
+ "v21r70": "v19t90 + 구제: 존재 0.7~0.9 이고 DINOv3 확률≥0.9 화소≥50 이면 양성(2차 분류기는 그대로 적용)",
+ "gate_tta": "d4",
+ "v22pens": "submission_v21r70 판정(v4≥0.9 + 구제 + 2차 분류기) + 마스크 0.50·runs/v22p/weights_step4000.pt + 0.50·runs/v22p_s2/weights_step1500.pt + 0.00·runs/v19_d3/weights_step6000.pt | 판정 D4 고정·마스크 실패 시 v4 마스크 대체",
+ "v22ens3": "submission_v22pens + 마스크 평균에 runs/v26mk2/weights_step1500.pt 추가(마스크 3개 균등)"
+}

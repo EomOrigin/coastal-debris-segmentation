@@ -1,0 +1,2 @@
+AnyUp: Universal Feature Upsampling (Wimmer et al., ICLR 2026). https://github.com/wimmerth/anyup
+Code and weights: CC BY 4.0. Vendored subset (model + layers, NATTEN variant removed). Pretrained checkpoint anyup_paper.pth trained on DINOv2 ViT-S/14 features (ImageNet).
